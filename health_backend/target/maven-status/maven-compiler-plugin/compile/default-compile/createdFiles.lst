@@ -1,0 +1,7 @@
+com\ajie\service\SpringSecurityUserService.class
+com\ajie\controller\CheckItemController.class
+com\ajie\controller\CheckGroupController.class
+com\ajie\controller\UserController.class
+com\ajie\controller\ReportController.class
+com\ajie\controller\SetmealController.class
+com\ajie\controller\OrderSettingController.class

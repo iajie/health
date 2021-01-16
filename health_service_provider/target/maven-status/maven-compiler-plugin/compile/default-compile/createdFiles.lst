@@ -1,0 +1,17 @@
+com\ajie\service\impl\OrderServiceImpl.class
+com\ajie\dao\OrderDao.class
+com\ajie\dao\OrderSettingDao.class
+com\ajie\dao\CheckItemDao.class
+com\ajie\service\impl\OrderSettingServiceImpl.class
+com\ajie\service\impl\CheckItemServiceImpl.class
+com\ajie\dao\CheckGroupDao.class
+com\ajie\service\impl\CheckGroupServiceImpl.class
+com\ajie\dao\RoleDao.class
+com\ajie\dao\UserDao.class
+com\ajie\dao\MemberDao.class
+com\ajie\dao\SetmealDao.class
+com\ajie\dao\PermissionDao.class
+com\ajie\service\impl\MemberServiceImpl.class
+com\ajie\service\impl\ReportServiceImpl.class
+com\ajie\service\impl\UserServiceImpl.class
+com\ajie\service\impl\SetmealServiceImpl.class

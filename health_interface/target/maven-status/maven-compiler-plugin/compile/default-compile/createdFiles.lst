@@ -1,0 +1,8 @@
+com\ajie\service\UserService.class
+com\ajie\service\MemberService.class
+com\ajie\service\ReportService.class
+com\ajie\service\CheckItemService.class
+com\ajie\service\SetmealService.class
+com\ajie\service\CheckGroupService.class
+com\ajie\service\OrderSettingService.class
+com\ajie\service\OrderService.class

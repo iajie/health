@@ -1,0 +1,4 @@
+com\ajie\controller\MemberController.class
+com\ajie\controller\SetmealController.class
+com\ajie\controller\ValidateCodeController.class
+com\ajie\controller\OrderController.class

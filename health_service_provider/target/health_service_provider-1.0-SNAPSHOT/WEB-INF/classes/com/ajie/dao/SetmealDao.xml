@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ajie.dao.SetmealDao">
+
+    <!--插入套餐sql-->
+    <insert id="add" parameterType="com.ajie.entity.Setmeal">
+        /*获取自增产生的id值*/
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into t_setmeal(code,name,helpCode,sex,age,price,remark,attention,img) values
+        (#{code},#{name},#{helpCode},#{sex},#{age},#{price},#{remark},#{attention},#{img})
+    </insert>
+
+    <insert id="setSetmealAndCheckGroup" parameterType="java.util.Map">
+        insert into t_setmeal_checkgroup(setmeal_id,checkgroup_id) values
+        (#{setmealId},#{checkgroupId})
+    </insert>
+
+    <!--分页查询套餐-->
+    <select id="findPage" resultType="com.ajie.entity.Setmeal" parameterType="java.lang.String">
+        select * from t_setmeal
+        <if test="value != null and value.length > 0">
+            where name like concat('%',#{value},'%') or code = #{value} or helpCode = #{value}
+        </if>
+    </select>
+    
+    <select id="findCheckGroupIdsBySetmealId" parameterType="int" resultType="int">
+        select checkgroup_id from t_setmeal_checkgroup where setmeal_id = #{id}
+    </select>
+    
+    <delete id="deleteAssocication" parameterType="java.lang.Integer">
+        delete from t_setmeal_checkgroup where setmeal_id = #{id}
+    </delete>
+    
+    <delete id="deleteById" parameterType="int">
+        delete from t_setmeal where id = #{id}
+    </delete>
+
+    <update id="edit" parameterType="com.ajie.entity.Setmeal">
+        update t_setmeal
+        <set>
+            <if test="code != null">
+                code = #{code},
+            </if>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="helpCode != null">
+                helpCode = #{helpCode},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="age != null">
+                age = #{age},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            <if test="attention != null">
+                attention = #{attention},
+            </if>
+            <if test="img != null">
+                img = #{img},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="findAllSetmeal" resultType="com.ajie.entity.Setmeal">
+        select * from t_setmeal
+    </select>
+
+    <resultMap id="baseResultMap" type="com.ajie.entity.Setmeal">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="code" property="code"/>
+        <result column="helpCode" property="helpCode"/>
+        <result column="sex" property="sex"/>
+        <result column="age" property="age"/>
+        <result column="price" property="price"/>
+        <result column="remark" property="remark"/>
+        <result column="attention" property="attention"/>
+        <result column="img" property="img"/>
+    </resultMap>
+
+    <resultMap id="findByIdResultMap" type="com.ajie.entity.Setmeal" extends="baseResultMap">
+        <!--
+            配置多对多关系映射
+            checkGroups：映射的检查组
+            com.ajie.entity.CheckGroup：查询类型
+            id：套餐ID
+            com.ajie.dao.CheckGroupDao.findCheckGroupById：查询检查组的方法
+        -->
+        <collection property="checkGroups"
+                    ofType="com.ajie.entity.CheckGroup"
+                    column="id"
+                    select="com.ajie.dao.CheckGroupDao.findCheckGroupById"/>
+    </resultMap>
+
+    <!--根据套餐ID查询套餐详情(包含套餐、检查项、检查组信息)-->
+    <select id="findById" parameterType="int" resultMap="findByIdResultMap">
+        select * from t_setmeal where id = #{id}
+    </select>
+
+    <select id="findSetmealCount" resultType="java.util.Map">
+        select s.name,count(o.id) value from t_setmeal s inner join t_order o on s.id = o.setmeal_id group by s.name
+    </select>
+</mapper>
